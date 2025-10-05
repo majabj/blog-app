@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Post;
@@ -28,6 +29,8 @@ Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->middleware('aut
 Route::put('/posts/{id}', [PostController::class, 'update'])->middleware('auth')->name('posts.update');
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->middleware('auth')->name('posts.destroy');
 
+Route::post('/posts/{id}/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 Route::get('/', function () {
     return view('welcome');
