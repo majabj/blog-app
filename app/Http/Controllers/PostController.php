@@ -36,7 +36,7 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Post created!');
     }
 
-    public function show(int $id)
+    public function show($id)
     {
         $post = Post::with(['user', 'comments.user'])->find($id);
 
@@ -50,33 +50,35 @@ class PostController extends Controller
     public function edit(int $id)
     {
         $post = Post::findOrFail($id);
-        if (auth()->id() !== $post->user_id) {
-            abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('update', $post);
+
         return view('posts.edit', compact('post'));
     }
 
     public function update(Request $request, int $id)
     {
         $post = Post::findOrFail($id);
-        if (auth()->id() !== $post->user_id) {
-            abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('update', $post);
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
         ]);
+
         $post->update($validated);
-        return redirect()->route('posts.show', $post->id)->with('success', 'Post updated successfully!');
+
+        return redirect()->route('posts.show', $post->id)
+            ->with('success', 'Post updated successfully!');
     }
 
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
-        if (auth()->id() !== $post->user_id) {
-            abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('delete', $post);
+
         $post->delete();
-        return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');
+
+        return redirect()->route('posts.index')
+            ->with('success', 'Post deleted successfully!');
     }
 }

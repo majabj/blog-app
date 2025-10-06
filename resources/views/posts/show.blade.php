@@ -39,13 +39,13 @@
                                 at {{ $comment->created_at->format('d M Y H:i') }}
                             </small>
 
-                            @if(Auth::check() && (Auth::id() === $comment->user_id || Auth::id() === $post->user_id))
-                                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="d-inline">
+                            @can('delete', $comment)
+                                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm mt-2">Delete</button>
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                 </form>
-                            @endif
+                            @endcan
                         </div>
                     </div>
                 @empty
