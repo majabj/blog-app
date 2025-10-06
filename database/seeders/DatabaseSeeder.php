@@ -25,5 +25,13 @@ class DatabaseSeeder extends Seeder
                 ->has(Comment::factory(5))
             )
             ->create();
+
+        User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+            'role' => 'admin',
+            'password' => bcrypt('admin'),
+        ]);
+
     }
 }
