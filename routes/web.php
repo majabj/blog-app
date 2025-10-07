@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -17,9 +18,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/posts', [PostController::class, 'index']);
-//Route::get('/posts/{id}', [PostController::class, 'show']);
-
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
@@ -36,7 +34,7 @@ Route::post('/posts/{id}/comments', [CommentController::class, 'store'])->name('
 Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('blog.index');
 });
 
 Route::get('/dashboard', function () {
@@ -48,5 +46,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__.'/auth.php';

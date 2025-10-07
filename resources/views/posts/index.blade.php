@@ -1,3 +1,4 @@
+<x-blog-layout>
 @extends('layout')
 
 @section('content')
@@ -55,4 +56,4 @@
         </div>
     </div>
 @endsection
-
+    </x-blog-layout>

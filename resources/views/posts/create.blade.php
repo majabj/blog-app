@@ -1,4 +1,5 @@
-@extends('layout')
+<x-blog-layout>
+    <@extends('layout')
 @section('content')
     <div class="container mt-5">
         <div class="row">
@@ -37,3 +38,4 @@
         </div>
     </div>
 @endsection
+    </x-blog-layout>
